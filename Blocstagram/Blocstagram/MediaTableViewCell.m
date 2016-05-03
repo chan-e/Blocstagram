@@ -171,9 +171,15 @@ static NSParagraphStyle *paragraphStyle;
     CGSize commentLabelSize  = [self.commentLabel sizeThatFits:maxSize];
     CGSize imageSize         = self.mediaItem.image.size;
     
-    self.usernameAndCaptionLabelHeightConstraint.constant = usernameLabelSize.height + 20;
-    self.commentLabelHeightConstraint.constant            = commentLabelSize.height + 20;
-    self.imageHeightConstraint.constant                   = (imageSize.height / imageSize.width) * CGRectGetWidth(self.contentView.bounds);
+    self.usernameAndCaptionLabelHeightConstraint.constant = usernameLabelSize.height == 0 ? 0 : usernameLabelSize.height + 20;
+    self.commentLabelHeightConstraint.constant            = commentLabelSize.height == 0 ? 0 : commentLabelSize.height + 20;
+    
+    if (imageSize.width > 0 && CGRectGetWidth(self.contentView.bounds) > 0) {
+        self.imageHeightConstraint.constant = (imageSize.height / imageSize.width) * CGRectGetWidth(self.contentView.bounds);
+    }
+    else {
+        self.imageHeightConstraint.constant = 0;
+    }
     
     // Hide the line between cells
     self.separatorInset = UIEdgeInsetsMake(0, CGRectGetWidth(self.bounds)/2.0,
