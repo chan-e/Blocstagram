@@ -44,7 +44,9 @@
 
 - (void) deleteMediaItem:(Media *)item {
     NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+    // Instead of deleting the item, move the item to the beginning of the array
     [mutableArrayWithKVO removeObject:item];
+    [mutableArrayWithKVO insertObject:item atIndex:0];
 }
 
 #pragma mark - Key/Value Observing
