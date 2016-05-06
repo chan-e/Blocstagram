@@ -23,6 +23,17 @@ NSString * const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewC
     return @"http://bloc.io";
 }
 
+- (void)loadLoginPage {
+    NSString *urlString = [NSString stringWithFormat:@"https://instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=token", [DataSource instagramClientID], [self redirectURI]];
+    
+    NSURL *url = [NSURL URLWithString:urlString];
+    
+    if (url) {
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [self.webView loadRequest:request];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -34,15 +45,17 @@ NSString * const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewC
     
     self.title = NSLocalizedString(@"Login", @"Login");
     
+    // Add a home button to the right of the navigation bar
+    UIBarButtonItem *homeButton = [[UIBarButtonItem alloc] initWithTitle:@"Home"
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(homeButtonPressed:)];
+    
+    self.navigationItem.rightBarButtonItem = homeButton;
+    
     self.webView = webView;
     
-    NSString *urlString = [NSString stringWithFormat:@"https://instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=token", [DataSource instagramClientID], [self redirectURI]];
-    NSURL *url          = [NSURL URLWithString:urlString];
-    
-    if (url) {
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        [self.webView loadRequest:request];
-    }
+    [self loadLoginPage];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -77,6 +90,30 @@ NSString * const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewC
     }
 }
 
+- (void)homeButtonPressed:(UIButton *)button {
+    [self loadLoginPage];
+}
+
+- (void)backButtonPressed:(UIButton *)button {
+    [self.webView goBack];
+}
+
+- (void)updateBackButton {
+    if ([self.webView canGoBack]) {
+        if (!self.navigationItem.leftBarButtonItem) {
+            UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(backButtonPressed:)];
+            
+            [self.navigationItem setLeftBarButtonItem:backButton animated:YES];
+        }
+    }
+    else {
+        [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+    }
+}
+
 #pragma mark - UIWebView delegate methods
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
@@ -95,6 +132,14 @@ NSString * const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewC
     }
     
     return YES;
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView {
+    [self updateBackButton];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [self updateBackButton];
 }
 
 /*
