@@ -21,6 +21,7 @@
 @property (nonatomic, strong) NSArray *mediaItems;
 @property (nonatomic, assign) BOOL isRefreshing;
 @property (nonatomic, assign) BOOL isLoadingOlderItems;
+@property (nonatomic, assign) BOOL thereAreNoMoreOlderMessages;
 
 @end
 
@@ -59,7 +60,7 @@
                                                       self.accessToken = note.object;
                                                       
                                                       // Got a token; populate the initial data
-                                                      [self populateDataWithParameters:nil];
+                                                      [self populateDataWithParameters:nil completionHandler:nil];
                                                   }];
 }
 
@@ -97,36 +98,54 @@
 #pragma mark
 
 - (void)requestNewItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler {
+    self.thereAreNoMoreOlderMessages = NO;
+    
     if (self.isRefreshing == NO) {
         self.isRefreshing = YES;
         
-        // TODO: Add images
+        NSString *minID = [[self.mediaItems firstObject] idNumber];
         
-        self.isRefreshing = NO;
+        NSDictionary *parameters;
         
-        if (completionHandler) {
-            completionHandler(nil);
+        if (minID) {
+            parameters = @{@"min_id": minID};
         }
+        
+        [self populateDataWithParameters:parameters completionHandler:^(NSError *error) {
+            self.isRefreshing = NO;
+            
+            if (completionHandler) {
+                completionHandler(error);
+            }
+        }];
     }
 }
 
 - (void)requestOldItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler {
-    if (self.isLoadingOlderItems == NO) {
+    if (self.isLoadingOlderItems == NO && self.thereAreNoMoreOlderMessages == NO) {
         self.isLoadingOlderItems = YES;
         
-        // TODO: Add images
+        NSString *maxID = [[self.mediaItems lastObject] idNumber];
         
-        self.isLoadingOlderItems = NO;
+        NSDictionary *parameters;
         
-        if (completionHandler) {
-            completionHandler(nil);
+        if (maxID) {
+            parameters = @{@"max_id": maxID};
         }
+        
+        [self populateDataWithParameters:parameters completionHandler:^(NSError *error) {
+            self.isLoadingOlderItems = NO;
+            
+            if (completionHandler) {
+                completionHandler(error);
+            }
+        }];
     }
 }
 
 #pragma mark
 
-- (void)populateDataWithParameters:(NSDictionary *)parameters {
+- (void)populateDataWithParameters:(NSDictionary *)parameters completionHandler:(NewItemCompletionBlock)completionHandler {
     // Only try to get the data if there's an access token
     if (self.accessToken) {
         
@@ -135,8 +154,8 @@
             
             NSMutableString *urlString = [NSMutableString stringWithFormat:@"https://api.instagram.com/v1/users/self/media/recent?access_token=%@", self.accessToken];
             
-            // For example, if dictionary contains {count: 50}, append `&count=50` to the URL
             for (NSString *parameterName in parameters) {
+                // For example, if dictionary contains {count: 50}, append `&count=50` to the URL
                 [urlString appendFormat:@"&%@=%@", parameterName, parameters[parameterName]];
             }
             
@@ -164,16 +183,110 @@
                         dispatch_async(dispatch_get_main_queue(), ^{
                             [self parseDataFromFeedDictionary:feedDictionary
                                     fromRequestWithParameters:parameters];
+                            
+                            if (completionHandler) {
+                                completionHandler(nil);
+                            }
+                            
                         });
                     }
+                    else if (completionHandler) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            completionHandler(jsonError);
+                        });
+                    }
+                    
                 }
-            }
-        });
+                else if (completionHandler) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completionHandler(webError);
+                    });
+                }
+                
+            } // If the URL string was neither malformed nor nil
+            
+        }); // dispatch_async
     }
 }
 
 - (void)parseDataFromFeedDictionary:(NSDictionary *)feedDictionary fromRequestWithParameters:(NSDictionary *)parameters {
-    NSLog(@"%@", feedDictionary);
+    NSArray *mediaArray = feedDictionary[@"data"];
+    
+    NSMutableArray *tmpMediaItems = [NSMutableArray array];
+    
+    for (NSDictionary *mediaDictionary in mediaArray) {
+        Media *mediaItem = [[Media alloc] initWithDictionary:mediaDictionary];
+        
+        if (mediaItem) {
+            [tmpMediaItems addObject:mediaItem];
+            [self downloadImageForMediaItem:mediaItem];
+        }
+    }
+    
+    NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+    
+    if (parameters[@"min_id"]) {
+        // This was a pull-to-refresh request
+        
+        NSRange rangeOfIndexes           = NSMakeRange(0, tmpMediaItems.count);
+        NSIndexSet *indexSetOfNewObjects = [NSIndexSet indexSetWithIndexesInRange:rangeOfIndexes];
+        
+        [mutableArrayWithKVO insertObjects:tmpMediaItems atIndexes:indexSetOfNewObjects];
+    }
+    else if (parameters[@"max_id"]) {
+        // This was an infinite scroll request
+        
+        if (tmpMediaItems.count == 0) {
+            // Since there are no more older messages, disable infinite scroll
+            
+            self.thereAreNoMoreOlderMessages = YES;
+        }
+        else {
+            [mutableArrayWithKVO addObjectsFromArray:tmpMediaItems];
+        }
+        
+    }
+    else {
+        [self willChangeValueForKey:@"mediaItems"];
+        self.mediaItems = tmpMediaItems;
+        [self didChangeValueForKey:@"mediaItems"];
+    }
+}
+
+- (void)downloadImageForMediaItem:(Media *)mediaItem {
+    if (mediaItem.mediaURL && !mediaItem.image) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSURLRequest *request = [NSURLRequest requestWithURL:mediaItem.mediaURL];
+            
+            NSURLResponse *response;
+            NSError *error;
+            
+            NSData *imageData = [NSURLConnection sendSynchronousRequest:request
+                                                      returningResponse:&response
+                                                                  error:&error];
+            
+            if (imageData) {
+                UIImage *image = [UIImage imageWithData:imageData];
+                
+                if (image) {
+                    mediaItem.image = image;
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+                        
+                        NSUInteger index = [mutableArrayWithKVO indexOfObject:mediaItem];
+                        
+                        [mutableArrayWithKVO replaceObjectAtIndex:index withObject:mediaItem];
+                    });
+                }
+                
+            }
+            else {
+                NSLog(@"Error downloading image: %@", error);
+            }
+            
+        }); // dispatch_async
+    }
 }
 
 @end
