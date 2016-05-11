@@ -69,6 +69,8 @@
                             [self downloadImageForMediaItem:mediaItem];
                         }
                         
+                        [self requestNewItemsWithCompletionHandler:nil];
+                        
                     } else {
                         [self populateDataWithParameters:nil completionHandler:nil];
                     }
