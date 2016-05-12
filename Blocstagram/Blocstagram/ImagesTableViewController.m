@@ -20,6 +20,25 @@
 
 @implementation ImagesTableViewController
 
++ (void)shareMedia:(Media *)media fromViewController:(UIViewController *)viewController {
+    NSMutableArray *itemsToShare = [NSMutableArray array];
+    
+    if (media.caption.length > 0) {
+        [itemsToShare addObject:media.caption];
+    }
+    
+    if (media.image) {
+        [itemsToShare addObject:media.image];
+    }
+    
+    if (itemsToShare.count > 0) {
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare
+                                                                                 applicationActivities:nil];
+        
+        [viewController presentViewController:activityVC animated:YES completion:nil];
+    }
+}
+
 - (instancetype)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
     
@@ -197,28 +216,17 @@
 #pragma mark - MediaTableViewCellDelegate
 
 - (void)cell:(MediaTableViewCell *)cell didTapImageView:(UIImageView *)imageView {
-    MediaFullScreenViewController *fullScreenVC = [[MediaFullScreenViewController alloc] initWithMedia:cell.mediaItem];
+    MediaFullScreenViewController *fullScreenVC = [[MediaFullScreenViewController alloc]
+                                                   initWithMedia:cell.mediaItem];
     
-    [self presentViewController:fullScreenVC animated:YES completion:nil];
+    UINavigationController *navigationVC        = [[UINavigationController alloc]
+                                                   initWithRootViewController:fullScreenVC];
+    
+    [self presentViewController:navigationVC animated:YES completion:nil];
 }
 
 - (void)cell:(MediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView {
-    NSMutableArray *itemsToShare = [NSMutableArray array];
-    
-    if (cell.mediaItem.caption.length > 0) {
-        [itemsToShare addObject:cell.mediaItem.caption];
-    }
-    
-    if (cell.mediaItem.image) {
-        [itemsToShare addObject:cell.mediaItem.image];
-    }
-    
-    if (itemsToShare.count > 0) {
-        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare
-                                                                                 applicationActivities:nil];
-        
-        [self presentViewController:activityVC animated:YES completion:nil];
-    }
+    [ImagesTableViewController shareMedia:cell.mediaItem fromViewController:self];
 }
 
 /*

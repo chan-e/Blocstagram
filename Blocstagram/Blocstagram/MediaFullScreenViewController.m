@@ -6,6 +6,7 @@
 //  Copyright © 2016 Bloc. All rights reserved.
 //
 
+#import "ImagesTableViewController.h"
 #import "MediaFullScreenViewController.h"
 #import "Media.h"
 
@@ -64,6 +65,13 @@
     
     [self.scrollView addGestureRecognizer:self.tap];
     [self.scrollView addGestureRecognizer:self.doubleTap];
+    
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithTitle:@"Share"
+                                                                    style:UIBarButtonItemStylePlain
+                                                                   target:self
+                                                                   action:@selector(shareButtonPressed:)];
+    
+    self.navigationItem.rightBarButtonItem = shareButton;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -143,6 +151,12 @@
     else {
         [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
     }
+}
+
+#pragma mark
+
+- (void)shareButtonPressed:(UIBarButtonItem *)sender {
+    [ImagesTableViewController shareMedia:self.media fromViewController:self];
 }
 
 /*
