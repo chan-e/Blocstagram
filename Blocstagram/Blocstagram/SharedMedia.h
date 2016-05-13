@@ -12,8 +12,6 @@
 
 @interface SharedMedia : NSObject
 
-@property (nonatomic, strong) Media* media;
-
-- (UIActivityViewController *)standardServices;
++ (UIActivityViewController *)standardServicesWithMedia:(Media *)media;
 
 @end

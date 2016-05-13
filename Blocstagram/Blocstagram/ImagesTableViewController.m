@@ -208,10 +208,7 @@
 }
 
 - (void)cell:(MediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView {
-    SharedMedia *sharedMedia = [[SharedMedia alloc] init];
-    sharedMedia.media = cell.mediaItem;
-    
-    UIActivityViewController *activityVC = [sharedMedia standardServices];
+    UIActivityViewController *activityVC = [SharedMedia standardServicesWithMedia:cell.mediaItem];
     
     if (activityVC) {
         [self presentViewController:activityVC animated:YES completion:nil];

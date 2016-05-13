@@ -156,10 +156,7 @@
 #pragma mark
 
 - (void)shareButtonPressed:(UIBarButtonItem *)sender {
-    SharedMedia *sharedMedia = [[SharedMedia alloc] init];
-    sharedMedia.media = self.media;
-    
-    UIActivityViewController *activityVC = [sharedMedia standardServices];
+    UIActivityViewController *activityVC = [SharedMedia standardServicesWithMedia:self.media];
     
     if (activityVC) {
         [self presentViewController:activityVC animated:YES completion:nil];

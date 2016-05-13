@@ -11,15 +11,15 @@
 
 @implementation SharedMedia
 
-- (UIActivityViewController *)standardServices {
++ (UIActivityViewController *)standardServicesWithMedia:(Media *)media {
     NSMutableArray *itemsToShare = [NSMutableArray array];
     
-    if (self.media.caption.length > 0) {
-        [itemsToShare addObject:self.media.caption];
+    if (media.caption.length > 0) {
+        [itemsToShare addObject:media.caption];
     }
     
-    if (self.media.image) {
-        [itemsToShare addObject:self.media.image];
+    if (media.image) {
+        [itemsToShare addObject:media.image];
     }
     
     if (itemsToShare.count > 0) {
