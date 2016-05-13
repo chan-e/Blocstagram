@@ -8,10 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class Media;
-
 @interface ImagesTableViewController : UITableViewController
-
-+ (void)shareMedia:(Media *)media fromViewController:(UIViewController *)viewController;
 
 @end

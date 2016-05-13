@@ -9,6 +9,7 @@
 #import "ImagesTableViewController.h"
 #import "DataSource.h"
 #import "Media.h"
+#import "SharedMedia.h"
 #import "User.h"
 #import "Comment.h"
 #import "MediaTableViewCell.h"
@@ -19,25 +20,6 @@
 @end
 
 @implementation ImagesTableViewController
-
-+ (void)shareMedia:(Media *)media fromViewController:(UIViewController *)viewController {
-    NSMutableArray *itemsToShare = [NSMutableArray array];
-    
-    if (media.caption.length > 0) {
-        [itemsToShare addObject:media.caption];
-    }
-    
-    if (media.image) {
-        [itemsToShare addObject:media.image];
-    }
-    
-    if (itemsToShare.count > 0) {
-        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare
-                                                                                 applicationActivities:nil];
-        
-        [viewController presentViewController:activityVC animated:YES completion:nil];
-    }
-}
 
 - (instancetype)initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
@@ -226,7 +208,14 @@
 }
 
 - (void)cell:(MediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView {
-    [ImagesTableViewController shareMedia:cell.mediaItem fromViewController:self];
+    SharedMedia *sharedMedia = [[SharedMedia alloc] init];
+    sharedMedia.media = cell.mediaItem;
+    
+    UIActivityViewController *activityVC = [sharedMedia standardServices];
+    
+    if (activityVC) {
+        [self presentViewController:activityVC animated:YES completion:nil];
+    }
 }
 
 /*

@@ -30,6 +30,7 @@
 		88249D791CD2B44800B67474 /* MediaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 88249D781CD2B44800B67474 /* MediaTableViewCell.m */; };
 		88249D7E1CDBEC1700B67474 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88249D7D1CDBEC1700B67474 /* LoginViewController.m */; };
 		88A2C00C1CE3DA850017BEBF /* MediaFullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A2C00B1CE3DA850017BEBF /* MediaFullScreenViewController.m */; };
+		88A2C00F1CE574B50017BEBF /* SharedMedia.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A2C00E1CE574B50017BEBF /* SharedMedia.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,8 @@
 		88249D7D1CDBEC1700B67474 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		88A2C00A1CE3DA850017BEBF /* MediaFullScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaFullScreenViewController.h; sourceTree = "<group>"; };
 		88A2C00B1CE3DA850017BEBF /* MediaFullScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaFullScreenViewController.m; sourceTree = "<group>"; };
+		88A2C00D1CE574B50017BEBF /* SharedMedia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SharedMedia.h; sourceTree = "<group>"; };
+		88A2C00E1CE574B50017BEBF /* SharedMedia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SharedMedia.m; sourceTree = "<group>"; };
 		F14C207203EB18614B652AF4 /* Pods-Blocstagram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blocstagram.release.xcconfig"; path = "Pods/Target Support Files/Pods-Blocstagram/Pods-Blocstagram.release.xcconfig"; sourceTree = "<group>"; };
 		FEF16D8CEC8399176A26AE0D /* libPods-Blocstagram.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Blocstagram.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFA2CBF8E290E7DBBE664B2B /* Pods-Blocstagram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Blocstagram.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Blocstagram/Pods-Blocstagram.debug.xcconfig"; sourceTree = "<group>"; };
@@ -122,16 +125,18 @@
 				88249D701CD17CA100B67474 /* Comment.m */,
 				88249D6C1CD17AEA00B67474 /* Media.h */,
 				88249D6D1CD17AEA00B67474 /* Media.m */,
+				88A2C00D1CE574B50017BEBF /* SharedMedia.h */,
+				88A2C00E1CE574B50017BEBF /* SharedMedia.m */,
 				88249D721CD17E3D00B67474 /* DataSource.h */,
 				88249D731CD17E3D00B67474 /* DataSource.m */,
 				88249D771CD2B44800B67474 /* MediaTableViewCell.h */,
 				88249D781CD2B44800B67474 /* MediaTableViewCell.m */,
-				88A2C00A1CE3DA850017BEBF /* MediaFullScreenViewController.h */,
-				88A2C00B1CE3DA850017BEBF /* MediaFullScreenViewController.m */,
 				88249D7C1CDBEC1700B67474 /* LoginViewController.h */,
 				88249D7D1CDBEC1700B67474 /* LoginViewController.m */,
 				88249D441CD01DC700B67474 /* ImagesTableViewController.h */,
 				88249D451CD01DC700B67474 /* ImagesTableViewController.m */,
+				88A2C00A1CE3DA850017BEBF /* MediaFullScreenViewController.h */,
+				88A2C00B1CE3DA850017BEBF /* MediaFullScreenViewController.m */,
 				88249CFA1CD0189D00B67474 /* Assets.xcassets */,
 				88249CFC1CD0189D00B67474 /* LaunchScreen.storyboard */,
 				88249CFF1CD0189D00B67474 /* Info.plist */,
@@ -306,6 +311,7 @@
 				88A2C00C1CE3DA850017BEBF /* MediaFullScreenViewController.m in Sources */,
 				88249D6B1CD179BE00B67474 /* User.m in Sources */,
 				88249D711CD17CA100B67474 /* Comment.m in Sources */,
+				88A2C00F1CE574B50017BEBF /* SharedMedia.m in Sources */,
 				88249D791CD2B44800B67474 /* MediaTableViewCell.m in Sources */,
 				88249D6E1CD17AEA00B67474 /* Media.m in Sources */,
 				88249CF31CD0189D00B67474 /* AppDelegate.m in Sources */,
