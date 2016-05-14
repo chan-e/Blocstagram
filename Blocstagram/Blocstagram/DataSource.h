@@ -17,6 +17,7 @@ typedef void(^NewItemCompletionBlock)(NSError *error);
 + (NSString *)instagramClientID;
 
 + (instancetype)sharedInstance;
+- (void)retryMediaItem:(Media *)item;
 - (void)deleteMediaItem:(Media *)item;
 - (void)requestNewItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler;
 - (void)requestOldItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler;

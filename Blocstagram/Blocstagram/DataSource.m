@@ -100,6 +100,13 @@
                                                   }];
 }
 
+- (void)retryMediaItem:(Media *)item {
+    // Only retry the media image download for now
+    item.image = nil;
+    
+    [self downloadImageForMediaItem:item];
+}
+
 - (void)deleteMediaItem:(Media *)item {
     NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
     [mutableArrayWithKVO removeObject:item];
