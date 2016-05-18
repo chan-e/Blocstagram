@@ -167,7 +167,6 @@
     Media *mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
     
     if (mediaItem.downloadState == MediaDownloadStateNeedsImage) {
-        NSLog(@"Download image");
         [[DataSource sharedInstance] downloadImageForMediaItem:mediaItem];
     }
 }
@@ -228,6 +227,18 @@
         
         [self presentViewController:activityVC animated:YES completion:nil];
     }
+}
+
+- (void)cellDidPressLikeButton:(MediaTableViewCell *)cell {
+    Media *item = cell.mediaItem;
+    
+    [[DataSource sharedInstance] toggleLikeOnMediaItem:item withCompletionHandler:^{
+        if (cell.mediaItem == item) {
+            cell.mediaItem = item;
+        }
+    }];
+    
+    cell.mediaItem = item;
 }
 
 /*

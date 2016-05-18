@@ -10,6 +10,7 @@
 #import "Media.h"
 #import "Comment.h"
 #import "User.h"
+#import "LikeButton.h"
 
 @interface MediaTableViewCell () <UIGestureRecognizerDelegate>
 
@@ -23,6 +24,8 @@
 
 @property (nonatomic, strong) UITapGestureRecognizer       *tapGestureRecognizer;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
+
+@property (nonatomic, strong) LikeButton *likeButton;
 
 @end
 
@@ -44,6 +47,8 @@ static NSParagraphStyle *paragraphStyle;
     
     self.usernameAndCaptionLabel.attributedText = [self usernameAndCaptionString];
     self.commentLabel.attributedText            = [self commentString];
+    
+    self.likeButton.likeButtonState = mediaItem.likeState;
 }
 
 + (void)load {
@@ -100,7 +105,13 @@ static NSParagraphStyle *paragraphStyle;
         self.commentLabel.numberOfLines   = 0;
         self.commentLabel.backgroundColor = commentLabelGray;
         
-        for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel]) {
+        self.likeButton = [[LikeButton alloc] init];
+        self.likeButton.backgroundColor = usernameLabelGray;
+        [self.likeButton addTarget:self
+                            action:@selector(likePressed:)
+                  forControlEvents:UIControlEventTouchUpInside];
+        
+        for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel, self.likeButton]) {
             [self.contentView addSubview:view];
             view.translatesAutoresizingMaskIntoConstraints = NO;
         }
@@ -108,7 +119,8 @@ static NSParagraphStyle *paragraphStyle;
         // With the visual format string
         NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(_mediaImageView,
                                                                       _usernameAndCaptionLabel,
-                                                                      _commentLabel);
+                                                                      _commentLabel,
+                                                                      _likeButton);
         
         [self.contentView addConstraints:
          [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_mediaImageView]|"
@@ -117,8 +129,8 @@ static NSParagraphStyle *paragraphStyle;
                                                    views:viewDictionary]];
         
         [self.contentView addConstraints:
-         [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel]|"
-                                                 options:kNilOptions
+         [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameAndCaptionLabel][_likeButton(==38)]|"
+                                                 options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom
                                                  metrics:nil
                                                    views:viewDictionary]];
         
@@ -284,6 +296,10 @@ static NSParagraphStyle *paragraphStyle;
     if (sender.state == UIGestureRecognizerStateBegan) {
         [self.delegate cell:self didLongPressImageView:self.mediaImageView];
     }
+}
+
+- (void)likePressed:(UIButton *)sender {
+    [self.delegate cellDidPressLikeButton:self];
 }
 
 #pragma mark - UIGestureRecognizerDelegate
