@@ -324,6 +324,7 @@
         
         [self.instagramOperationManager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             mediaItem.likeState = LikeStateLiked;
+            mediaItem.likeCount++;
             
             if (completionHandler) {
                 completionHandler();
@@ -343,6 +344,7 @@
         
         [self.instagramOperationManager DELETE:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             mediaItem.likeState = LikeStateNotLiked;
+            mediaItem.likeCount--;
             
             if (completionHandler) {
                 completionHandler();

@@ -29,14 +29,15 @@
                                                                  clockwise:YES];
         
         _circleLayer = [CAShapeLayer layer];
-        _circleLayer.contentsScale = [[UIScreen mainScreen] scale];
-        _circleLayer.frame         = rect;
-        _circleLayer.fillColor     = [UIColor clearColor].CGColor;
-        _circleLayer.strokeColor   = self.strokeColor.CGColor;
-        _circleLayer.lineWidth     = self.strokeThickness;
-        _circleLayer.lineCap       = kCALineCapRound;
-        _circleLayer.lineJoin      = kCALineJoinBevel;
-        _circleLayer.path          = smoothedPath.CGPath;
+        _circleLayer.contentsScale   = [[UIScreen mainScreen] scale];
+        _circleLayer.frame           = rect;
+        _circleLayer.fillColor       = [UIColor clearColor].CGColor;
+        _circleLayer.strokeColor     = self.strokeColor.CGColor;
+        _circleLayer.lineWidth       = self.strokeThickness;
+        _circleLayer.lineCap         = kCALineCapRound;
+        _circleLayer.lineJoin        = kCALineJoinBevel;
+        _circleLayer.lineDashPattern = @[@1, @6];
+        _circleLayer.path            = smoothedPath.CGPath;
         
         CALayer *maskLayer = [CALayer layer];
         maskLayer.contents = (id)[[UIImage imageNamed:@"angle-mask"] CGImage];
@@ -45,13 +46,13 @@
         _circleLayer.mask = maskLayer;
         
         CFTimeInterval animationDuration = 1;
-        CAMediaTimingFunction *linearCurve = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        CAMediaTimingFunction *nonLinearCurve = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
         
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
         animation.fromValue           = @0;
         animation.toValue             = @(M_PI*2);
         animation.duration            = animationDuration;
-        animation.timingFunction      = linearCurve;
+        animation.timingFunction      = nonLinearCurve;
         animation.removedOnCompletion = NO;
         animation.repeatCount         = INFINITY;
         animation.fillMode            = kCAFillModeForwards;
@@ -63,7 +64,7 @@
         animationGroup.duration            = animationDuration;
         animationGroup.repeatCount         = INFINITY;
         animationGroup.removedOnCompletion = NO;
-        animationGroup.timingFunction      = linearCurve;
+        animationGroup.timingFunction      = nonLinearCurve;
         
         CABasicAnimation *strokeStartAnimation = [CABasicAnimation animationWithKeyPath:@"strokeStart"];
         strokeStartAnimation.fromValue = @0.015;
@@ -131,9 +132,9 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        self.strokeThickness = 1;
+        self.strokeThickness = 2;
         self.radius          = 12;
-        self.strokeColor     = [UIColor purpleColor];
+        self.strokeColor     = [UIColor magentaColor];
     }
     
     return self;

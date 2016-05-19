@@ -235,10 +235,14 @@
     [[DataSource sharedInstance] toggleLikeOnMediaItem:item withCompletionHandler:^{
         if (cell.mediaItem == item) {
             cell.mediaItem = item;
+            
+            [[DataSource sharedInstance] saveImages];
         }
     }];
     
     cell.mediaItem = item;
+    
+    [[DataSource sharedInstance] saveImages];
 }
 
 /*
