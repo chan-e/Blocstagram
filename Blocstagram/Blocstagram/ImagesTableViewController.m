@@ -13,8 +13,9 @@
 #import "Comment.h"
 #import "MediaTableViewCell.h"
 #import "MediaFullScreenViewController.h"
+#import "CameraViewController.h"
 
-@interface ImagesTableViewController () <MediaTableViewCellDelegate>
+@interface ImagesTableViewController () <MediaTableViewCellDelegate, CameraViewControllerDelegate>
 
 @property (nonatomic, weak) UIView *lastSelectedCommentView;
 @property (nonatomic, assign) CGFloat lastKeyboardAdjustment;
@@ -68,6 +69,17 @@
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera] ||
+        [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
+        
+        UIBarButtonItem *cameraButton =
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCamera
+                                                      target:self
+                                                      action:@selector(cameraPressed:)];
+        
+        self.navigationItem.rightBarButtonItem = cameraButton;
+    }
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -135,33 +147,11 @@
     }
 }
 
-- (void)refreshControlDidFire:(UIRefreshControl *)sender {
-    [[DataSource sharedInstance] requestNewItemsWithCompletionHandler:^(NSError *error) {
-        [sender endRefreshing];
-    }];
-}
-
-#pragma mark - UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    [self infiniteScrollIfNecessary];
-}
-
-- (void)infiniteScrollIfNecessary {
-    NSIndexPath *bottomIndexPath = [[self.tableView indexPathsForVisibleRows] lastObject];
-    
-    if (bottomIndexPath && bottomIndexPath.row == [DataSource sharedInstance].mediaItems.count - 1) {
-        // The very last cell is on screen
-        [[DataSource sharedInstance] requestOldItemsWithCompletionHandler:nil];
-    }
-}
-
-#pragma mark - Table view data source
+#pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [DataSource sharedInstance].mediaItems.count;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MediaTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"mediaCell" forIndexPath:indexPath];
@@ -172,7 +162,7 @@
     return cell;
 }
 
-#pragma mark - Table view delegate
+#pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
@@ -234,6 +224,27 @@
     return YES;
 }
 */
+
+#pragma mark - Refresh and UIScrollViewDelegate
+
+- (void)refreshControlDidFire:(UIRefreshControl *)sender {
+    [[DataSource sharedInstance] requestNewItemsWithCompletionHandler:^(NSError *error) {
+        [sender endRefreshing];
+    }];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self infiniteScrollIfNecessary];
+}
+
+- (void)infiniteScrollIfNecessary {
+    NSIndexPath *bottomIndexPath = [[self.tableView indexPathsForVisibleRows] lastObject];
+    
+    if (bottomIndexPath && bottomIndexPath.row == [DataSource sharedInstance].mediaItems.count - 1) {
+        // The very last cell is on screen
+        [[DataSource sharedInstance] requestOldItemsWithCompletionHandler:nil];
+    }
+}
 
 #pragma mark - MediaTableViewCellDelegate
 
@@ -357,6 +368,28 @@
         self.tableView.contentInset          = contentInsets;
         self.tableView.scrollIndicatorInsets = scrollIndicatorInsets;
     } completion:nil];
+}
+
+#pragma mark - Camera and CameraViewControllerDelegate
+
+- (void)cameraPressed:(UIBarButtonItem *) sender {
+    CameraViewController *cameraVC = [[CameraViewController alloc] init];
+    cameraVC.delegate = self;
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:cameraVC];
+    [self presentViewController:nav animated:YES completion:nil];
+    
+    return;
+}
+
+- (void)cameraViewController:(CameraViewController *)cameraViewController didCompleteWithImage:(UIImage *)image {
+    [cameraViewController dismissViewControllerAnimated:YES completion:^{
+        if (image) {
+            NSLog(@"Got an image!");
+        } else {
+            NSLog(@"Closed without an image.");
+        }
+    }];
 }
 
 /*
