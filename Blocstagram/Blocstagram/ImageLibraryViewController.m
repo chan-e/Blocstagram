@@ -72,9 +72,10 @@
     CGFloat cellSize  = width / divisor;
     
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
-    flowLayout.itemSize                = CGSizeMake(cellSize, cellSize);
-    flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.minimumLineSpacing      = 0;
+    flowLayout.itemSize                = CGSizeMake(cellSize-1, cellSize-1);
+    flowLayout.minimumInteritemSpacing = 0.5;
+    flowLayout.minimumLineSpacing      = 1.5;
+    flowLayout.sectionInset            = UIEdgeInsetsMake(10, 0, 10, 0);
 }
 
 - (void)loadAssets {
