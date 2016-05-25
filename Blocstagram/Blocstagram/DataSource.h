@@ -14,6 +14,10 @@ typedef void(^NewItemCompletionBlock)(NSError *error);
 
 @interface DataSource : NSObject
 
+@property (nonatomic, strong, readonly) NSString *accessToken;
+
+@property (nonatomic, strong, readonly) NSArray *mediaItems;
+
 + (NSString *)instagramClientID;
 + (instancetype)sharedInstance;
 
@@ -26,9 +30,5 @@ typedef void(^NewItemCompletionBlock)(NSError *error);
 
 - (void)toggleLikeOnMediaItem:(Media *)mediaItem withCompletionHandler:(void (^)(void))completionHandler;
 - (void)commentOnMediaItem:(Media *)mediaItem withCommentText:(NSString *)commentText;
-
-@property (nonatomic, strong, readonly) NSString *accessToken;
-
-@property (nonatomic, strong, readonly) NSArray *mediaItems;
 
 @end
