@@ -18,6 +18,8 @@
 		882008991CF5032F002AAA12 /* CropImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 882008981CF5032F002AAA12 /* CropImageViewController.m */; };
 		8820089C1CF511AB002AAA12 /* ImageLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8820089B1CF511AB002AAA12 /* ImageLibraryViewController.m */; };
 		8820089F1CF7A6EE002AAA12 /* PostToInstagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8820089E1CF7A6EE002AAA12 /* PostToInstagramViewController.m */; };
+		882008A21CF90E53002AAA12 /* FilterCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 882008A11CF90E53002AAA12 /* FilterCollectionViewCell.m */; };
+		882008A51CF974E3002AAA12 /* FilterImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 882008A41CF974E3002AAA12 /* FilterImage.m */; };
 		88249CF01CD0189D00B67474 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88249CEF1CD0189D00B67474 /* main.m */; };
 		88249CF31CD0189D00B67474 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88249CF21CD0189D00B67474 /* AppDelegate.m */; };
 		88249CFB1CD0189D00B67474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88249CFA1CD0189D00B67474 /* Assets.xcassets */; };
@@ -63,6 +65,10 @@
 		8820089B1CF511AB002AAA12 /* ImageLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageLibraryViewController.m; sourceTree = "<group>"; };
 		8820089D1CF7A6EE002AAA12 /* PostToInstagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostToInstagramViewController.h; sourceTree = "<group>"; };
 		8820089E1CF7A6EE002AAA12 /* PostToInstagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostToInstagramViewController.m; sourceTree = "<group>"; };
+		882008A01CF90E53002AAA12 /* FilterCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterCollectionViewCell.h; sourceTree = "<group>"; };
+		882008A11CF90E53002AAA12 /* FilterCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterCollectionViewCell.m; sourceTree = "<group>"; };
+		882008A31CF974E3002AAA12 /* FilterImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterImage.h; sourceTree = "<group>"; };
+		882008A41CF974E3002AAA12 /* FilterImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterImage.m; sourceTree = "<group>"; };
 		88249CEB1CD0189D00B67474 /* Blocstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blocstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88249CEF1CD0189D00B67474 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		88249CF11CD0189D00B67474 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -150,6 +156,8 @@
 				88249D701CD17CA100B67474 /* Comment.m */,
 				88249D6C1CD17AEA00B67474 /* Media.h */,
 				88249D6D1CD17AEA00B67474 /* Media.m */,
+				882008A31CF974E3002AAA12 /* FilterImage.h */,
+				882008A41CF974E3002AAA12 /* FilterImage.m */,
 				8820086C1CEBCB64002AAA12 /* CircleSpinnerView.h */,
 				8820086D1CEBCB64002AAA12 /* CircleSpinnerView.m */,
 				8820086F1CEBE61A002AAA12 /* LikeButton.h */,
@@ -158,6 +166,8 @@
 				882008891CEFB9D5002AAA12 /* ComposeCommentView.m */,
 				88249D771CD2B44800B67474 /* MediaTableViewCell.h */,
 				88249D781CD2B44800B67474 /* MediaTableViewCell.m */,
+				882008A01CF90E53002AAA12 /* FilterCollectionViewCell.h */,
+				882008A11CF90E53002AAA12 /* FilterCollectionViewCell.m */,
 				882008941CF4FDCC002AAA12 /* CropBox.h */,
 				882008951CF4FDCC002AAA12 /* CropBox.m */,
 				8820088B1CF2679E002AAA12 /* CameraToolbar.h */,
@@ -357,9 +367,11 @@
 				882008901CF27702002AAA12 /* CameraViewController.m in Sources */,
 				88A2C00C1CE3DA850017BEBF /* MediaFullScreenViewController.m in Sources */,
 				8820086E1CEBCB64002AAA12 /* CircleSpinnerView.m in Sources */,
+				882008A21CF90E53002AAA12 /* FilterCollectionViewCell.m in Sources */,
 				88249D6B1CD179BE00B67474 /* User.m in Sources */,
 				8820089C1CF511AB002AAA12 /* ImageLibraryViewController.m in Sources */,
 				882008961CF4FDCC002AAA12 /* CropBox.m in Sources */,
+				882008A51CF974E3002AAA12 /* FilterImage.m in Sources */,
 				88249D711CD17CA100B67474 /* Comment.m in Sources */,
 				882008991CF5032F002AAA12 /* CropImageViewController.m in Sources */,
 				88249D791CD2B44800B67474 /* MediaTableViewCell.m in Sources */,

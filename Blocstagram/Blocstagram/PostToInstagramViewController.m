@@ -7,6 +7,8 @@
 //
 
 #import "PostToInstagramViewController.h"
+#import "FilterImage.h"
+#import "FilterCollectionViewCell.h"
 
 @interface PostToInstagramViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIDocumentInteractionControllerDelegate>
 
@@ -88,7 +90,7 @@
         self.navigationItem.rightBarButtonItem = self.sendBarButton;
     }
     
-    [self.filterCollectionView registerClass:[UICollectionViewCell class]
+    [self.filterCollectionView registerClass:[FilterCollectionViewCell class]
                   forCellWithReuseIdentifier:@"cell"];
     
     self.view.backgroundColor                 = [UIColor whiteColor];
@@ -251,38 +253,18 @@
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell"
+    FilterCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell"
                                                                            forIndexPath:indexPath];
-    
-    static NSInteger imageViewTag = 1000;
-    static NSInteger labelTag     = 1001;
-    
-    UIImageView *thumbnail = (UIImageView *)[cell.contentView viewWithTag:imageViewTag];
-    UILabel *label         = (UILabel *)[cell.contentView viewWithTag:labelTag];
     
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.filterCollectionView.collectionViewLayout;
     CGFloat thumbnailEdgeSize              = flowLayout.itemSize.width;
     
-    if (!thumbnail) {
-        thumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, thumbnailEdgeSize, thumbnailEdgeSize)];
-        thumbnail.contentMode   = UIViewContentModeScaleAspectFill;
-        thumbnail.tag           = imageViewTag;
-        thumbnail.clipsToBounds = YES;
-        
-        [cell.contentView addSubview:thumbnail];
-    }
+    FilterImage *filterImage = [[FilterImage alloc] init];
+    filterImage.image = self.filterImages[indexPath.row];
+    filterImage.text  = self.filterTitles[indexPath.row];
     
-    if (!label) {
-        label = [[UILabel alloc] initWithFrame:CGRectMake(0, thumbnailEdgeSize, thumbnailEdgeSize, 20)];
-        label.tag           = labelTag;
-        label.font          = [UIFont fontWithName:@"HelveticaNeue-Medium" size:10];
-        label.textAlignment = NSTextAlignmentCenter;
-        
-        [cell.contentView addSubview:label];
-    }
-    
-    thumbnail.image = self.filterImages[indexPath.row];
-    label.text      = self.filterTitles[indexPath.row];
+    cell.filterImageItem   = filterImage;
+    cell.thumbnailEdgeSize = thumbnailEdgeSize;
     
     return cell;
 }
@@ -496,6 +478,50 @@
             
             [self addCIImageToCollectionView:composite.outputImage
                              withFilterTitle:NSLocalizedString(@"Film", @"Film Filter")];
+        }
+    }];
+    
+    // Color invert filter
+    
+    [self.photoFilterOperationQueue addOperationWithBlock:^{
+        CIFilter *colorInvertFilter = [CIFilter filterWithName:@"CIColorInvert"];
+        
+        if (colorInvertFilter) {
+            [colorInvertFilter setValue:sourceCIImage
+                                 forKey:kCIInputImageKey];
+            
+            [self addCIImageToCollectionView:colorInvertFilter.outputImage
+                             withFilterTitle:NSLocalizedString(@"Invert", @"Color Invert Filter")];
+        }
+    }];
+    
+    // Sepia filter
+    
+    [self.photoFilterOperationQueue addOperationWithBlock:^{
+        CIFilter *sepiaFilter    = [CIFilter filterWithName:@"CISepiaTone"];
+        CIFilter *vignetteFilter = [CIFilter filterWithName:@"CIVignette"];
+        
+        if (sepiaFilter) {
+            [sepiaFilter setValue:sourceCIImage
+                           forKey:kCIInputImageKey];
+            
+            CIImage *result = sepiaFilter.outputImage;
+            
+            if (vignetteFilter) {
+                [vignetteFilter setValue:result
+                                  forKey:kCIInputImageKey];
+                
+                [vignetteFilter setValue:@2.0
+                                  forKey:kCIInputRadiusKey];
+                
+                [vignetteFilter setValue:@1.0
+                                  forKey:kCIInputIntensityKey];
+                
+                result = vignetteFilter.outputImage;
+            }
+            
+            [self addCIImageToCollectionView:result
+                             withFilterTitle:NSLocalizedString(@"Sepia", @"Sepia Filter")];
         }
     }];
 }
