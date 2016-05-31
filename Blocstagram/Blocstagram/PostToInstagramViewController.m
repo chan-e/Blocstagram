@@ -95,38 +95,97 @@
     self.filterCollectionView.backgroundColor = [UIColor whiteColor];
     
     self.navigationItem.title = NSLocalizedString(@"Apply Filter", @"apply filter view title");
+    
+    
+    
+    self.previewImageView.translatesAutoresizingMaskIntoConstraints     = NO;
+    self.filterCollectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.sendButton.translatesAutoresizingMaskIntoConstraints           = NO;
+    
+    id topLayoutGuide    = self.topLayoutGuide;
+    id bottomLayoutGuide = self.bottomLayoutGuide;
+    
+    NSDictionary *viewDictionary = NSDictionaryOfVariableBindings(topLayoutGuide,
+                                                                  bottomLayoutGuide,
+                                                                  _previewImageView,
+                                                                  _filterCollectionView,
+                                                                  _sendButton);
+    
+    if (CGRectGetHeight(self.view.frame) > 500) {
+        CGRect frame          = self.view.frame;
+        CGFloat viewHeight    = CGRectGetHeight(frame);
+        CGFloat viewWidth     = CGRectGetWidth(frame);
+        CGFloat edgeSize      = MIN(viewWidth, viewHeight);
+        CGFloat buttonHeight  = 50;
+        
+        NSDictionary *metrics = @{@"viewWidth"   : @(viewWidth),
+                                  @"edgeSize"    : @(edgeSize),
+                                  @"buttonHeight": @(buttonHeight)};
+        
+        [self.view addConstraints:
+         [NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayoutGuide]-[_previewImageView(edgeSize)]-[_filterCollectionView]-[_sendButton(buttonHeight)]-[bottomLayoutGuide]"
+                                                 options:NSLayoutFormatAlignAllCenterX
+                                                 metrics:metrics
+                                                   views:viewDictionary]];
+        
+        [self.view addConstraints:
+         [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_previewImageView(edgeSize)]|"
+                                                 options:kNilOptions
+                                                 metrics:metrics
+                                                   views:viewDictionary]];
+        
+        [self.view addConstraints:
+         [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_filterCollectionView(viewWidth)]|"
+                                                 options:kNilOptions
+                                                 metrics:metrics
+                                                   views:viewDictionary]];
+        
+        [self.view addConstraints:
+         [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-[_sendButton]-|"
+                                                 options:kNilOptions
+                                                 metrics:nil
+                                                   views:viewDictionary]];
+    }
+    else {
+        CGRect popoverFrame       = self.navigationController.view.frame;
+        CGFloat popoverViewHeight = CGRectGetHeight(popoverFrame);
+        CGFloat popoverViewWidth  = CGRectGetWidth(popoverFrame);
+        CGFloat popoverEdgeSize   = MIN(popoverViewWidth, popoverViewHeight);
+        
+        // Adjust the preview image edge size in the popover
+        popoverEdgeSize /= 1.5;
+        
+        // To center the preview image,
+        // calculate the space on the left and right of the image
+        CGFloat space = (popoverViewWidth - popoverEdgeSize) / 2;
+        
+        NSDictionary *popoverMetrics = @{@"viewWidth": @(popoverViewWidth),
+                                         @"edgeSize" : @(popoverEdgeSize),
+                                         @"space"    : @(space)};
+        
+        [self.view addConstraints:
+         [NSLayoutConstraint constraintsWithVisualFormat:@"V:[topLayoutGuide]-[_previewImageView(edgeSize)]-[_filterCollectionView]-[bottomLayoutGuide]"
+                                                 options:kNilOptions
+                                                 metrics:popoverMetrics
+                                                   views:viewDictionary]];
+        
+        [self.view addConstraints:
+         [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-space-[_previewImageView(edgeSize)]-space-|"
+                                                 options:kNilOptions
+                                                 metrics:popoverMetrics
+                                                   views:viewDictionary]];
+        
+        [self.view addConstraints:
+         [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_filterCollectionView(viewWidth)]|"
+                                                 options:kNilOptions
+                                                 metrics:popoverMetrics
+                                                   views:viewDictionary]];
+    }
+
 }
 
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
-    
-    CGFloat edgeSize = MIN(CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
-    
-    if (CGRectGetHeight(self.view.bounds) < edgeSize * 1.5) {
-        edgeSize /= 1.5;
-    }
-    
-    self.previewImageView.frame = CGRectMake(0, self.topLayoutGuide.length,
-                                             edgeSize, edgeSize);
-    
-    CGFloat buttonHeight = 50;
-    CGFloat buffer = 10;
-    
-    CGFloat filterViewYOrigin = CGRectGetMaxY(self.previewImageView.frame) + buffer;
-    CGFloat filterViewHeight;
-    
-    if (CGRectGetHeight(self.view.frame) > 500) {
-        self.sendButton.frame = CGRectMake(buffer, CGRectGetHeight(self.view.frame) - buffer - buttonHeight,
-                                           CGRectGetWidth(self.view.frame) - 2 * buffer, buttonHeight);
-        
-        filterViewHeight = CGRectGetHeight(self.view.frame) - filterViewYOrigin - buffer - buffer - CGRectGetHeight(self.sendButton.frame);
-    }
-    else {
-        filterViewHeight = CGRectGetHeight(self.view.frame) - CGRectGetMaxY(self.previewImageView.frame) - buffer - buffer;
-    }
-    
-    self.filterCollectionView.frame = CGRectMake(0, filterViewYOrigin,
-                                                 CGRectGetWidth(self.view.frame), filterViewHeight);
     
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.filterCollectionView.collectionViewLayout;
     

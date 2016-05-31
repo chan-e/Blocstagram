@@ -9,9 +9,10 @@
 #import "MediaFullScreenViewController.h"
 #import "Media.h"
 
-@interface MediaFullScreenViewController () <UIScrollViewDelegate>
+@interface MediaFullScreenViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
+@property (nonatomic, strong) UITapGestureRecognizer *windowTap;
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTap;
 
 @end
@@ -62,6 +63,24 @@
     
     [self.scrollView addGestureRecognizer:self.tap];
     [self.scrollView addGestureRecognizer:self.doubleTap];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    self.windowTap = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                        action:@selector(windowTapFired:)];
+    
+    self.windowTap.cancelsTouchesInView = NO;
+    self.windowTap.delegate             = self;
+    
+    [self.view.window addGestureRecognizer:self.windowTap];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.view.window removeGestureRecognizer:self.windowTap];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -148,6 +167,31 @@
     else {
         [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
     }
+}
+
+- (void)windowTapFired:(UITapGestureRecognizer *)sender {
+    CGPoint tapLocationInWindowCoord = [sender locationInView:nil];
+    
+    // Adjust the window (x,y) coordinate system when the interface is in landscape mode
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+        CGFloat windowHeight = CGRectGetHeight(self.view.window.frame);
+        
+        tapLocationInWindowCoord = CGPointMake(tapLocationInWindowCoord.y,
+                                               windowHeight-tapLocationInWindowCoord.x);
+    }
+    
+    CGPoint tapLocationInViewCoord = [self.view convertPoint:tapLocationInWindowCoord
+                                                    fromView:self.view.window];
+    
+    if (![self.view pointInside:tapLocationInViewCoord withEvent:nil]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+#pragma mark - UIGestureRecognizer Delegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    return YES;
 }
 
 /*
