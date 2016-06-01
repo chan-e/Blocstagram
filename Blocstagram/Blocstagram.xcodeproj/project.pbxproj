@@ -18,6 +18,8 @@
 		882008991CF5032F002AAA12 /* CropImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 882008981CF5032F002AAA12 /* CropImageViewController.m */; };
 		8820089C1CF511AB002AAA12 /* ImageLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8820089B1CF511AB002AAA12 /* ImageLibraryViewController.m */; };
 		8820089F1CF7A6EE002AAA12 /* PostToInstagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8820089E1CF7A6EE002AAA12 /* PostToInstagramViewController.m */; };
+		882008AD1CFF5E09002AAA12 /* BlocstagramTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 882008AC1CFF5E09002AAA12 /* BlocstagramTests.m */; };
+		882008B51CFF5ED8002AAA12 /* UserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 882008B41CFF5ED8002AAA12 /* UserTests.m */; };
 		88249CF01CD0189D00B67474 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88249CEF1CD0189D00B67474 /* main.m */; };
 		88249CF31CD0189D00B67474 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88249CF21CD0189D00B67474 /* AppDelegate.m */; };
 		88249CFB1CD0189D00B67474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88249CFA1CD0189D00B67474 /* Assets.xcassets */; };
@@ -42,6 +44,16 @@
 		88A2C00C1CE3DA850017BEBF /* MediaFullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A2C00B1CE3DA850017BEBF /* MediaFullScreenViewController.m */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		882008AF1CFF5E09002AAA12 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88249CE31CD0189D00B67474 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 88249CEA1CD0189D00B67474;
+			remoteInfo = Blocstagram;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		8820086C1CEBCB64002AAA12 /* CircleSpinnerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleSpinnerView.h; sourceTree = "<group>"; };
 		8820086D1CEBCB64002AAA12 /* CircleSpinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleSpinnerView.m; sourceTree = "<group>"; };
@@ -63,6 +75,10 @@
 		8820089B1CF511AB002AAA12 /* ImageLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageLibraryViewController.m; sourceTree = "<group>"; };
 		8820089D1CF7A6EE002AAA12 /* PostToInstagramViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostToInstagramViewController.h; sourceTree = "<group>"; };
 		8820089E1CF7A6EE002AAA12 /* PostToInstagramViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostToInstagramViewController.m; sourceTree = "<group>"; };
+		882008AA1CFF5E09002AAA12 /* BlocstagramTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BlocstagramTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		882008AC1CFF5E09002AAA12 /* BlocstagramTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlocstagramTests.m; sourceTree = "<group>"; };
+		882008AE1CFF5E09002AAA12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		882008B41CFF5ED8002AAA12 /* UserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTests.m; sourceTree = "<group>"; };
 		88249CEB1CD0189D00B67474 /* Blocstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blocstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88249CEF1CD0189D00B67474 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		88249CF11CD0189D00B67474 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -102,6 +118,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		882008A71CFF5E09002AAA12 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88249CE81CD0189D00B67474 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -122,10 +145,21 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		882008AB1CFF5E09002AAA12 /* BlocstagramTests */ = {
+			isa = PBXGroup;
+			children = (
+				882008AC1CFF5E09002AAA12 /* BlocstagramTests.m */,
+				882008B41CFF5ED8002AAA12 /* UserTests.m */,
+				882008AE1CFF5E09002AAA12 /* Info.plist */,
+			);
+			path = BlocstagramTests;
+			sourceTree = "<group>";
+		};
 		88249CE21CD0189D00B67474 = {
 			isa = PBXGroup;
 			children = (
 				88249CED1CD0189D00B67474 /* Blocstagram */,
+				882008AB1CFF5E09002AAA12 /* BlocstagramTests */,
 				88249CEC1CD0189D00B67474 /* Products */,
 				318EE83EBF8E4261E531F8B7 /* Pods */,
 				E048E79C9057AC759CDC3F82 /* Frameworks */,
@@ -136,6 +170,7 @@
 			isa = PBXGroup;
 			children = (
 				88249CEB1CD0189D00B67474 /* Blocstagram.app */,
+				882008AA1CFF5E09002AAA12 /* BlocstagramTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -226,6 +261,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		882008A91CFF5E09002AAA12 /* BlocstagramTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 882008B31CFF5E09002AAA12 /* Build configuration list for PBXNativeTarget "BlocstagramTests" */;
+			buildPhases = (
+				882008A61CFF5E09002AAA12 /* Sources */,
+				882008A71CFF5E09002AAA12 /* Frameworks */,
+				882008A81CFF5E09002AAA12 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				882008B01CFF5E09002AAA12 /* PBXTargetDependency */,
+			);
+			name = BlocstagramTests;
+			productName = BlocstagramTests;
+			productReference = 882008AA1CFF5E09002AAA12 /* BlocstagramTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		88249CEA1CD0189D00B67474 /* Blocstagram */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 88249D021CD0189D00B67474 /* Build configuration list for PBXNativeTarget "Blocstagram" */;
@@ -255,6 +308,10 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = Bloc;
 				TargetAttributes = {
+					882008A91CFF5E09002AAA12 = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = 88249CEA1CD0189D00B67474;
+					};
 					88249CEA1CD0189D00B67474 = {
 						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = X83HZNZSM6;
@@ -275,11 +332,19 @@
 			projectRoot = "";
 			targets = (
 				88249CEA1CD0189D00B67474 /* Blocstagram */,
+				882008A91CFF5E09002AAA12 /* BlocstagramTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		882008A81CFF5E09002AAA12 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88249CE91CD0189D00B67474 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -350,6 +415,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		882008A61CFF5E09002AAA12 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				882008B51CFF5ED8002AAA12 /* UserTests.m in Sources */,
+				882008AD1CFF5E09002AAA12 /* BlocstagramTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88249CE71CD0189D00B67474 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -379,6 +453,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		882008B01CFF5E09002AAA12 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 88249CEA1CD0189D00B67474 /* Blocstagram */;
+			targetProxy = 882008AF1CFF5E09002AAA12 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		88249CFC1CD0189D00B67474 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -391,6 +473,30 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		882008B11CFF5E09002AAA12 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = BlocstagramTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Bloc.BlocstagramTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Blocstagram.app/Blocstagram";
+			};
+			name = Debug;
+		};
+		882008B21CFF5E09002AAA12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = BlocstagramTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Bloc.BlocstagramTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Blocstagram.app/Blocstagram";
+			};
+			name = Release;
+		};
 		88249D001CD0189D00B67474 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -504,6 +610,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		882008B31CFF5E09002AAA12 /* Build configuration list for PBXNativeTarget "BlocstagramTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				882008B11CFF5E09002AAA12 /* Debug */,
+				882008B21CFF5E09002AAA12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		88249CE61CD0189D00B67474 /* Build configuration list for PBXProject "Blocstagram" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
