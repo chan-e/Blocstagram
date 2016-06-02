@@ -20,6 +20,9 @@
 		8820089F1CF7A6EE002AAA12 /* PostToInstagramViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8820089E1CF7A6EE002AAA12 /* PostToInstagramViewController.m */; };
 		882008AD1CFF5E09002AAA12 /* BlocstagramTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 882008AC1CFF5E09002AAA12 /* BlocstagramTests.m */; };
 		882008B51CFF5ED8002AAA12 /* UserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 882008B41CFF5ED8002AAA12 /* UserTests.m */; };
+		882008B71CFF8873002AAA12 /* MediaTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 882008B61CFF8873002AAA12 /* MediaTests.m */; };
+		882008B91CFFA7A9002AAA12 /* ComposeCommentViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 882008B81CFFA7A9002AAA12 /* ComposeCommentViewTests.m */; };
+		882008BB1CFFACE1002AAA12 /* MediaTableViewCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 882008BA1CFFACE1002AAA12 /* MediaTableViewCellTests.m */; };
 		88249CF01CD0189D00B67474 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88249CEF1CD0189D00B67474 /* main.m */; };
 		88249CF31CD0189D00B67474 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88249CF21CD0189D00B67474 /* AppDelegate.m */; };
 		88249CFB1CD0189D00B67474 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88249CFA1CD0189D00B67474 /* Assets.xcassets */; };
@@ -79,6 +82,9 @@
 		882008AC1CFF5E09002AAA12 /* BlocstagramTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BlocstagramTests.m; sourceTree = "<group>"; };
 		882008AE1CFF5E09002AAA12 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		882008B41CFF5ED8002AAA12 /* UserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTests.m; sourceTree = "<group>"; };
+		882008B61CFF8873002AAA12 /* MediaTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTests.m; sourceTree = "<group>"; };
+		882008B81CFFA7A9002AAA12 /* ComposeCommentViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeCommentViewTests.m; sourceTree = "<group>"; };
+		882008BA1CFFACE1002AAA12 /* MediaTableViewCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTableViewCellTests.m; sourceTree = "<group>"; };
 		88249CEB1CD0189D00B67474 /* Blocstagram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Blocstagram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88249CEF1CD0189D00B67474 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		88249CF11CD0189D00B67474 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -150,6 +156,9 @@
 			children = (
 				882008AC1CFF5E09002AAA12 /* BlocstagramTests.m */,
 				882008B41CFF5ED8002AAA12 /* UserTests.m */,
+				882008B61CFF8873002AAA12 /* MediaTests.m */,
+				882008B81CFFA7A9002AAA12 /* ComposeCommentViewTests.m */,
+				882008BA1CFFACE1002AAA12 /* MediaTableViewCellTests.m */,
 				882008AE1CFF5E09002AAA12 /* Info.plist */,
 			);
 			path = BlocstagramTests;
@@ -419,8 +428,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				882008B71CFF8873002AAA12 /* MediaTests.m in Sources */,
 				882008B51CFF5ED8002AAA12 /* UserTests.m in Sources */,
 				882008AD1CFF5E09002AAA12 /* BlocstagramTests.m in Sources */,
+				882008BB1CFFACE1002AAA12 /* MediaTableViewCellTests.m in Sources */,
+				882008B91CFFA7A9002AAA12 /* ComposeCommentViewTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -617,6 +629,7 @@
 				882008B21CFF5E09002AAA12 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		88249CE61CD0189D00B67474 /* Build configuration list for PBXProject "Blocstagram" */ = {
 			isa = XCConfigurationList;
