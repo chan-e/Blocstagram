@@ -198,7 +198,12 @@
         
         NSMutableDictionary *mutableParameters = [@{@"access_token": self.accessToken} mutableCopy];
         
-        [mutableParameters addEntriesFromDictionary:parameters];
+        if (!parameters) {
+            [mutableParameters addEntriesFromDictionary:@{}];
+        }
+        else {
+            [mutableParameters addEntriesFromDictionary:parameters];
+        }
         
         [self.instagramOperationManager GET:@"users/self/media/recent"
                                  parameters:mutableParameters
